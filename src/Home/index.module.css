@@ -1,0 +1,396 @@
+.box{
+    display: flex;
+    margin-top: -450px;
+    flex-wrap: wrap;
+    max-width: 2000px; /* Giới hạn chiều rộng của .box */
+}
+.done{
+    width: 250px;
+    height: 300px;
+    margin-top: 70px;
+    margin-bottom: 40px;
+    border: solid  rgba(19, 182, 73, 0.1);
+    border-top-left-radius:10px;
+    border-top-right-radius:10px ;
+    background-color: white;
+    
+}
+.order-monoi{
+    display: flex;
+    margin-top: 200px;
+    margin-left: 800px;
+}
+.list-check-box{
+    margin-left: 1500px;
+}
+
+.footer {
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin-top: 70px;
+  }
+  
+  .footer-col {
+    padding: 0 20px;
+  }
+  
+  .footer-col ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .footer-col ul li {
+    margin: 10px 0;
+  }
+  
+  .footer-col ul li a {
+    text-decoration: none;
+    color: #1890ff;
+  }
+  
+  .footer-col ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    border-top: 1px solid #d9d9d9;
+    padding-top: 10px;
+  }
+  
+  .footer-col-home-page ul{
+    display: block;
+  }
+
+  .layout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.layout-header-start {
+    display: flex;
+    align-items: center;
+}
+
+.layout-header-start .icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.layout-header-start .icon-container .icon {
+    color: green;
+    font-size: 100px;
+}
+
+.layout-header-start .icon-container .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: orange;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.layout-header-center {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.layout-header-center ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.layout-header-center ul li {
+    margin: 0 15px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.layout-header-center ul li:hover {
+    color: #1890ff;
+}
+
+.layout-header-center ul li .ant-dropdown-trigger {
+    display: flex;
+    align-items: center;
+}
+
+.layout-header-center ul li .search-container {
+    display: flex;
+    align-items: center;
+}
+
+.layout-header-center ul li .search-container .ant-input {
+    height: 30px;
+}
+
+.layout-header-center ul li .search-container .ant-btn {
+    height: 30px;
+}
+
+.layout-header-center ul li .user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.layout-header-center ul li .user-actions .ant-btn {
+    font-size: 17px;
+}
+
+.layout-header-center ul li .user-actions .anticon {
+    font-size: 20px;
+}
+
+.layout-header-center ul li .cart-icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-container .ant-input {
+  height: 30px; /* Ensure input height matches the button */
+  border-radius: 4px 0 0 4px; /* Match the border-radius with the button */
+}
+
+.search-container .ant-btn {
+  height: 30px; /* Match the height of the button to the input */
+  border-radius: 0 4px 4px 0; /* Match the border-radius with the input */
+  border: none; /* Remove default border if not needed */
+}
+
+.search-container .ant-input,
+.search-container .ant-btn {
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
+
+.footer-home-page {
+  background-color: #f8f8f8; /* Light gray background for the footer */
+  padding: 20px 0;
+  border-top: 1px solid #ddd; /* Light border at the top */
+}
+
+.footer-col-home-page {
+  text-align: center; /* Center-align text inside columns */
+}
+
+.footer-col-home-page ul {
+  list-style: none; /* Remove default list styling */
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col-home-page li {
+  margin: 8px 0; /* Space between list items */
+}
+
+.footer-col-home-page a {
+  color: #1890ff; /* Link color */
+  text-decoration: none; /* Remove underline from links */
+}
+
+.footer-col-home-page a:hover {
+  text-decoration: underline; /* Underline links on hover */
+}
+
+.footer-bottom-home-page {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #888; /* Light gray text color */
+}
+
+.footer-bottom-home-page .ant-typography {
+  margin: 0; /* Remove default margin */
+}
+
+.book-well-sell-container {
+  padding: 20px;
+  background-color: #f5f5f5; /* Light background color for contrast */
+  margin-top: 40px; /* Space above the section */
+}
+
+.book-well-sell-title {
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333; /* Dark color for text */
+  display: flex;
+  align-items: center;
+}
+
+.book-well-sell-title .anticon {
+  margin-left: 10px; /* Space between title and icon */
+  font-size: 30px;
+  color: #d9534f; /* Accent color */
+}
+
+.book-card-col {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; /* Space between cards */
+}
+
+.book-card {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 10px; /* Rounded corners for cards */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+.book-card:hover {
+  transform: translateY(-10px); /* Lift effect on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.card-cover {
+  position: relative;
+}
+
+.like-icon {
+  position: absolute;
+  top: 10px; /* Adjusted to ensure it's not obscured */
+  right: 10px;
+  font-size: 24px;
+  color: pink; /* Default color */
+  cursor: pointer;
+  z-index: 1; /* Ensures the icon is above the image */
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.card-price {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #666; /* Slightly lighter color for text */
+}
+
+.card-footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.buy-now-button {
+  background-color: #d9534f; /* Red background color */
+  color: white;
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.buy-now-button:hover {
+  background-color: #c9302c; /* Darker red on hover */
+}
+
+/* /// */
+
+
+.like-icon {
+  position: absolute;
+  top: 10px;  /* Adjusted position */
+  right: 50px; /* Adjusted position */
+  font-size: 25px;
+  color: pink; /* Default color */
+  cursor: pointer;
+  z-index: 10; /* Ensures the icon is above other elements */
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.like-icon.liked {
+  color: red; /* Color when liked */
+}
+
+.card-image {
+  height: 200px;
+  object-fit: cover;
+  width: 220px;
+  display: flex;
+  margin: 0 auto;
+}
+
+
+/* /// */
+
+
+.card-cover {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.like-icon {
+  position: absolute;
+  top: -2px; /* Adjusted position */
+  right: 90px; /* Adjusted position */
+  font-size: 25px;
+  color: pink; /* Default color */
+  cursor: pointer;
+  z-index: 10; /* Ensures the icon is above other elements */
+}
+
+.like-icon.liked {
+  color: red; /* Color when liked */
+}
+
+.card-image {
+  height: 200px;
+  object-fit: cover;
+  width: 220px;
+  display: block; /* Ensures the image is a block-level element for centering */
+  margin: 0 auto;
+}
+
+
+/* Thiết lập container chính cho slider */
+.slider-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Thiết lập kiểu cho các slide */
+.slick-slide {
+  text-align: center;
+  background: white; /* màu nền mặc định */
+  padding: 10px;
+  padding-bottom: 10px;
+}
+
+.slick-slide div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Chiều cao của mỗi slide */
+}
+
+/* .slick-slider button{
+  background-color: #c9302c;
+} */
+.slider-container-sell{
+  width: 98%;
+  margin: 0 auto;
+  padding: 20px;
+}
+.slider-container-sell .slick-slide div{
+  height: 350px;
+}

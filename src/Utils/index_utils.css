@@ -1,0 +1,18 @@
+.chatbot-container {
+    position: fixed; /* Makes the chatbot and icon stay fixed in position */
+    bottom: 100px;    /* Distance from the bottom */
+    right: 20px;     /* Distance from the right */
+    z-index: 9999;   /* Ensures it appears on top of other elements */
+  }
+  
+  .chatbot {
+    overflow-y: auto; /* Enable scrolling for overflowing content */
+    background-color: white; /* Background color */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    position: absolute; /* Position the chatbot relative to the icon */
+    bottom: 38px;      /* Place it above the icon */
+    right: 0;          /* Align to the right */
+  }
+  
