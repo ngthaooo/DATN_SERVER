@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Status Update</title>
+    <!-- JS-Cookie Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+    <!-- Axios Library -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="text-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Đang tải...</span>
+        </div>
+        <h3 class="mt-3">Đang xử lý đơn hàng của bạn, vui lòng chờ...</h3>
+    </div>
+    
+    <script>
+        // Function to update order status using Axios
+        async function updateOrderStatus(orderId) {
+            try {
+                const response = await axios.patch(`http://127.0.0.1:8080/manager/order/update/success`, null, {
+                    params: {
+                        order_id: orderId,
+                    },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                console.log("API Response:", response.data); // Log API response for debugging
+
+                if (response.data.code === 0) {
+                    window.location.href = 'http://127.0.0.1:3000';
+                } else {
+                    alert('lỗi kết nối mạng  vui lòng kiểm tra thiết bị');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('lỗi kết nối mạng  vui lòng kiểm tra thiết bị');
+            }
+        }
+
+        // Function to get query parameter from URL
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Get orderCode from URL and update order status with delay
+        window.onload = function () {
+            const orderId = getQueryParam('orderCode');
+            if (orderId) {
+                // Delay 30s (30000 milliseconds) before updating the order status
+                setTimeout(function () {
+                    updateOrderStatus(orderId);
+                }, 3000);
+            } else {
+                alert('Order ID is missing. Unable to update order status.');
+            }
+        }
+    </script>
+</body>
+</html>
