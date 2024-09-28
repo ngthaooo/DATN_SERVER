@@ -31,7 +31,7 @@ func WsHandler(c *gin.Context) {
 	}
 	defer conn.Close()
 
-	grpcConn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	grpcConn, err := grpc.Dial("localhost:50051", grpc.WithInsecure()) /// connect grpc
 	if err != nil {
 		log.Fatalf("Failed to connect to gRPC server: %v", err)
 	}

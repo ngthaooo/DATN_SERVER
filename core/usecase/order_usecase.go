@@ -327,11 +327,14 @@ func (u *UseCaseOrder) GetListOrderAdmin(ctx context.Context) ([]*entities.Order
 		}
 		for _, v := range orderItem {
 			book, _ := u.book.GetBookByIdUseOrderTk(ctx, v.BookID)
-			listItemOrder = append(listItemOrder, entities.Item{
-				Name:     book.Title,
-				Quantity: v.Quantity,
-				Price:    v.Price,
-			})
+			if book != nil {
+				listItemOrder = append(listItemOrder, entities.Item{
+					Name:     book.Title,
+					Quantity: v.Quantity,
+					Price:    v.Price,
+				})
+			}
+
 		}
 		if orderItem != nil {
 			detailListorder = append(detailListorder, &entities.OrderDetailsAdmin{
