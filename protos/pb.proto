@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package aipool;
+
+message AIRequest {
+    string input_data = 1;  // Input từ gRPC client (message của người dùng)
+}
+
+message AIResponse {
+    bool success = 1;               // Xác định thành công
+    string message = 2;             // Kết quả hoặc lỗi
+    string output_data = 3;         // Dữ liệu phản hồi từ chatbot
+}
+
+service AIService {
+    rpc ProcessAIRequest (AIRequest) returns (AIResponse);
+}
