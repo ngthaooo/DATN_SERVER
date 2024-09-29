@@ -94,7 +94,7 @@ function DetailBook({ book }) {  // Destructuring book prop
 
             <Tooltip title="Xem chi tiết">
                 <Button type="primary" onClick={handleViewDetails}>
-                    <TbListDetails />
+                chi tiết
                 </Button>
             </Tooltip>
             <Drawer

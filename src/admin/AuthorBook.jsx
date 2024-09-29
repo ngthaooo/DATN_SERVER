@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Input, Button, message, Form, DatePicker, Upload, Avatar, Space, Popconfirm } from 'antd';
+import { Table, Input, Button, message, Form, DatePicker, Upload, Avatar, Space, Popconfirm, Modal } from 'antd';
 import axios from 'axios';
 import moment from 'moment';
 import UpdateAuthorModal from './UpdateAuthorModal';  // Import modal
@@ -10,11 +10,11 @@ function AuthorBook() {
     const [filteredAuthors, setFilteredAuthors] = useState([]);  // Filtered list of authors
     const [loading, setLoading] = useState(false);  // Loading state
     const [searchName, setSearchName] = useState('');  // Search by name
-    const [searchNationality, setSearchNationality] = useState('');  // Search by nationality
     const [birthDate, setBirthDate] = useState(null);  // Birth date filter
-    const [searchBiography, setSearchBiography] = useState('');  // Search by biography
     const [selectedAuthor, setSelectedAuthor] = useState(null);  // Selected author for update
     const [isUpdateModalVisible, setUpdateModalVisible] = useState(false);  // Modal visibility
+    const [isBiographyModalVisible, setBiographyModalVisible] = useState(false);  // Modal for biography
+    const [selectedBiography, setSelectedBiography] = useState('');  // Selected biography for modal
     const [imageFile, setImageFile] = useState(null);  // Avatar image upload state
 
     const fetchAuthors = async () => {
@@ -90,6 +90,17 @@ function AuthorBook() {
         }
     };
 
+    // Function to open the biography modal
+    const openBiographyModal = (biography) => {
+        setSelectedBiography(biography);
+        setBiographyModalVisible(true);
+    };
+
+    // Function to limit the biography display length
+    const truncateBiography = (biography, length = 50) => {
+        return biography.length > length ? biography.substring(0, length) + '...' : biography;
+    };
+
     const columns = [
         {
             title: 'STT',
@@ -106,6 +117,16 @@ function AuthorBook() {
             title: 'Tiểu Sử',
             dataIndex: 'biography',
             key: 'biography',
+            render: (biography) => (
+                <>
+                    {truncateBiography(biography)}{' '}
+                    {biography.length > 100 && (
+                        <Button type="link" onClick={() => openBiographyModal(biography)}>
+                            Xem chi tiết
+                        </Button>
+                    )}
+                </>
+            ),
         },
         {
             title: 'Ngày Sinh',
@@ -154,31 +175,14 @@ function AuthorBook() {
                 style={{ marginBottom: 10, maxWidth: 800 }}
             >
                 <div style={{ display: 'flex' }}>
-
-                    <Form.Item
-                        name="name"
-                        style={{ marginBottom: '10px' }}
-                    >
-                        <Input
-                            placeholder="Tên Tác Giả"
-                            style={{ height: '40px' }}
-                        />
+                    <Form.Item name="name" style={{ marginBottom: '10px' }}>
+                        <Input placeholder="Tên Tác Giả" style={{ height: '40px' }} />
                     </Form.Item>
-                    <Form.Item
-                        name="biography"
-                    >
-                        <Input
-                            placeholder="Tiểu Sử"
-                            style={{ height: '40px' }}
-                        />
+                    <Form.Item name="biography">
+                        <Input placeholder="Tiểu Sử" style={{ height: '40px' }} />
                     </Form.Item>
-                    <Form.Item
-                        name="nationality"
-                    >
-                        <Input
-                            placeholder="Quốc Tịch"
-                            style={{ height: '40px' }}
-                        />
+                    <Form.Item name="nationality">
+                        <Input placeholder="Quốc Tịch" style={{ height: '40px' }} />
                     </Form.Item>
                     <Form.Item>
                         <DatePicker style={{ height: '40px' }} onChange={(date) => setBirthDate(date)} />
@@ -231,8 +235,17 @@ function AuthorBook() {
                 visible={isUpdateModalVisible}
                 onClose={() => setUpdateModalVisible(false)}  // Đóng modal
                 onUpdate={fetchAuthors}  // Refresh danh sách sau khi cập nhật
-                author={selectedAuthor}  // Truyền thông tin tác giả vào modal
+                author={selectedAuthor}  // Pass tác giả vào modal
             />
+
+            <Modal
+                title="Tiểu Sử Tác Giả"
+                visible={isBiographyModalVisible}
+                onCancel={() => setBiographyModalVisible(false)}
+                footer={null}
+            >
+                <p>{selectedBiography}</p>
+            </Modal>
         </div>
     );
 }

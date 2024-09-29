@@ -110,18 +110,7 @@ function Publishers() {
             key: 'website',
             render: (text) => <a href={text} target="_blank" rel="noopener noreferrer">{text}</a>,
         },
-        {
-            title: 'Ngày Tạo',
-            dataIndex: 'created_at',
-            key: 'created_at',
-            render: (text) => new Date(text).toLocaleString(),
-        },
-        {
-            title: 'Ngày Cập Nhật',
-            dataIndex: 'updated_at',
-            key: 'updated_at',
-            render: (text) => new Date(text).toLocaleString(),
-        },
+       
         {
             title: 'Hành Động',
             key: 'action',

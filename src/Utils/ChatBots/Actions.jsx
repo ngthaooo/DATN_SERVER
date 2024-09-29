@@ -92,7 +92,7 @@ class ActionProvider {
               botMessageText = `Sách "${item.name_book}" có giá ${item.price} VND.`;
               break;
             case 2:
-              botMessageText = `Chất lượng sách "${item.name_book}" là ${item.quality}.`;
+              botMessageText = `Số lượng sách "${item.name_book}" là ${item.quality}.`;
               break;
             case 3:
               botMessageText = `Tác giả: ${item.author}, Quốc tịch: ${item.nationality}, Ngày sinh: ${item.birth_date}.`;

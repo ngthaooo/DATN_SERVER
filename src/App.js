@@ -44,6 +44,8 @@ import ManLayRaListSachTheoLoai from "./Home/ManLayRaListSachTheoLoai";
 import BieuDoThongKe from "./admin/BieuDoThongKe";
 import BieuDoLineChart from "./admin/BieuDoLineChart";
 import ChatBots from "./Utils/ChatBots/ChatBot";
+import LandingPage from "./Home/GioiThieu";
+import GioiThieu from "./Home/GioiThieu";
 
 
 
@@ -116,6 +118,8 @@ function App() {
       {/* <ChatBots/> */}
       {/* <ProFile/> */}
       {/* <ChatbotWrapper/> */}
+      {/* <GioiThieu/> */}
+      {/* <Dashboard/> */}
     </div>
   );
 }

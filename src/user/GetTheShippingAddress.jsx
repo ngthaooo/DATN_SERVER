@@ -146,7 +146,7 @@ function GetTheShippingAddress() {
                 <p>Chưa có thông tin địa chỉ giao hàng</p>
             )}
 
-            <Button onClick={showModal}>Thay đổi địa chỉ</Button>
+            <Button type='default' style={{marginTop:'30px',marginLeft:'300px',height:'40px'}} onClick={showModal}>Thay đổi địa chỉ</Button>
             <div style={{ color: 'green', marginTop: '50px' }}>
 
             </div>

@@ -1,0 +1,11 @@
+.content-gioi-thieu {
+    display: flex;
+    width: 600px;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    text-align: center; /* Căn giữa văn bản */
+    padding: 10px; /* Thêm khoảng cách bên trong nếu cần */
+    margin: 20px auto; /* Thêm khoảng cách xung quanh và căn giữa div trên trang */
+    background-color: #f9f9f9; /* Màu nền */
+    border-radius: 5px; /* Bo tròn góc */
+}

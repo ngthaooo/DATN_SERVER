@@ -3,6 +3,7 @@ import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import moment from 'moment';
 import { DatePicker, Button, Space } from 'antd';
+import CircularChart from './CircularChart';
 
 const { RangePicker } = DatePicker;
 
@@ -103,6 +104,7 @@ function BieuDoLineChart() {
                     </LineChart>
                 </ResponsiveContainer>
             </div>
+            <CircularChart/>
         </div>
     );
 }

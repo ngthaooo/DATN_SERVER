@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Button, Col, Drawer, Dropdown, Image, Input, Menu, message, Modal, Rate, Row, Space, Spin, Tooltip, Typography } from 'antd';
+import { Button, Carousel, Col, Drawer, Dropdown, Image, Input, Menu, message, Modal, Rate, Row, Space, Spin, Tooltip, Typography } from 'antd';
 import './home_index.module.css';
 import { MinusOutlined, PlusOutlined, QuestionOutlined } from '@ant-design/icons';
 
@@ -22,10 +22,17 @@ import { BsFileMinus } from 'react-icons/bs';
 import BookWellSell from './BookWellSell';
 import { TiArrowBackOutline } from 'react-icons/ti';
 import HomePage from './HomePage';
+import BookCarousel from './BookCarousel';
 const { Title, Text, Paragraph } = Typography;
-
+const contentStyle = {
+    height: '360px',
+    color: '#fff',
+    lineHeight: '360px',
+    textAlign: 'center',
+    background: '#364d79',
+};
 //màn đì têu book
-const ChitietSanPhamKhiMuaHang = ({ book_id,onEventClick }) => {
+const ChitietSanPhamKhiMuaHang = ({ book_id, onEventClick }) => {
 
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -146,13 +153,6 @@ const ChitietSanPhamKhiMuaHang = ({ book_id,onEventClick }) => {
     };
 
 
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-    };
 
     if (isBuy) {
         return (
@@ -177,25 +177,10 @@ const ChitietSanPhamKhiMuaHang = ({ book_id,onEventClick }) => {
                 </Col>
 
                 <Col style={{ background: 'white' }} xs={12} sm={12} md={12} lg={12} xl={12}>
+
                     <div style={{ display: 'flex', padding: '20px' }}>
 
-                        <div style={{
-                            width: '1700px',
-                            height: '400px',
-                            border: '2px solid gray',
-                            borderRadius: '15px', // Rounded corners
-                            padding: '20px',
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                            overflow: 'hidden', // Prevent overflow for rounded corners
-                        }} className="slider-container">
-                            <Slider {...settings}>
-                                {book.files.map((item, index) => (
-                                    <div key={index}>
-                                        <Image src={item} width={600} style={{ borderRadius: '10px' }} /> {/* Rounded image */}
-                                    </div>
-                                ))}
-                            </Slider>
-                        </div>
+                        <BookCarousel book={book} />
 
                         <div style={{ paddingLeft: '40px', flex: 1 }}>
 
@@ -208,9 +193,7 @@ const ChitietSanPhamKhiMuaHang = ({ book_id,onEventClick }) => {
                                 }}>
                                     {book.title}
                                 </div>
-                                <div style={{ marginTop: '40px', marginLeft: '50px' }}>
-                                    <Rate count={5} />
-                                </div>
+                               
                             </Space>
 
                             <div style={{
@@ -238,17 +221,20 @@ const ChitietSanPhamKhiMuaHang = ({ book_id,onEventClick }) => {
                                 <span style={{
                                     color: 'red',
                                     fontWeight: 'bold',
-                                    fontSize: '30px'
-                                }}>
-                                    {book.price}đ
-                                </span>
-                                <span style={{
-                                    textDecoration: 'line-through',
-                                    color: 'gray',
-                                    marginLeft: '20px',
-                                    fontSize: '22px'
+                                    fontSize: '30px',
+
                                 }}>
                                     {book.price - book.price * (book.discount_price / 100)}đ
+
+                                </span>
+                                <span style={{
+                                    color: 'gray',
+                                    marginLeft: '20px',
+                                    fontSize: '20px',
+                                    textDecoration: 'line-through',
+
+                                }}>
+                                    {book.price}đ
                                 </span>
                                 {book.discount_price && (
                                     <span style={{

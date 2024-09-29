@@ -116,11 +116,6 @@ function ListBooks() {
             key: 'quantity',
         },
         {
-            title: 'Ghi chú',
-            dataIndex: 'notes',
-            key: 'notes',
-        },
-        {
             title: 'Tình trạng mở',
             dataIndex: 'opening_status',
             key: 'opening_status',
@@ -141,7 +136,7 @@ function ListBooks() {
                             onClick={() => handleDelete(record.id)}
                             style={{ display: 'block', marginBottom: 8 }}
                         >
-                            <TiDocumentDelete style={{ fontSize: '30px' }} />
+                            xóa
                         </Button>
                     </Tooltip>
                 </div>

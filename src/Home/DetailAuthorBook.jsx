@@ -3,7 +3,7 @@ import axios from "axios";
 import { Col, Image, Row } from "antd";
 import styles from './DetailAuthorBook.module.css'; // Import CSS Module
 
-function DetailAuthorBook({authorBooName}) {
+function DetailAuthorBook({ authorBooName }) {
     const [author, setAuthor] = useState(null); // State to store author data
     const [loading, setLoading] = useState(true); // State to track loading status
     const [error, setError] = useState(null); // State to track errors
@@ -45,15 +45,28 @@ function DetailAuthorBook({authorBooName}) {
             {author ? (
                 <div>
                     <div className={styles.authorDetails}>
-                        <Col className={styles.column}>
+                        <Col style={{ marginLeft: '250px', marginTop: '50px' }} className={styles.column}>
                             <Image width={600} height={400} src={author.avatar} />
                         </Col>
-                        <Col className={styles.column}>
+                        <Col style={{ marginLeft: '100px', marginTop: '-50px' }} className={styles.column}>
                             <h1>Chi tiết Tác giả</h1>
-                            <p><strong>Tên:</strong> {author.name}</p>
-                            <p><strong>Ngày sinh:</strong> {author.birth_date}</p>
-                            <p><strong>Quốc tịch:</strong> {author.nationality}</p>
-                            <p><strong>Tiểu sử:</strong> {author.biography}</p>
+                            <p style={{ fontSize: '18px', color: '#555', marginBottom: '10px' }}>
+                                Tên: {author.name}</p>
+                            <p style={{ fontSize: '18px', color: '#555', marginBottom: '10px' }}>
+                                Ngày sinh: {author.birth_date}</p>
+                            <p style={{ fontSize: '18px', color: '#555', marginBottom: '10px' }}>
+                                Quốc tịch: {author.nationality}</p>
+                            <p style={{
+                                fontSize: '18px',
+                                color: '#555',
+                                marginBottom: '10px',
+                                fontFamily: 'Georgia, serif', // Custom font
+                                textShadow: '2px 2px 4px rgba(0, 0, 0, 0.2)', // Shadow effect
+                                fontWeight: 'normal' // Optional, if you want a normal font-weight
+                            }}>
+                                <strong>Tiểu sử:</strong> {author.biography}
+                            </p>
+
                         </Col>
 
                     </div>

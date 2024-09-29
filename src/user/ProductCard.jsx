@@ -44,7 +44,7 @@ const ProductCard = ({ imageUrl, title, price, quantity, sell, onDelete }) => {
                 <Row>{title}</Row>
                 <Row>
                     <Space>
-                        <p style={{ marginTop: '25px' }}>Giảm {sell}% so với giá bìa (-72.000₫)</p>
+                        <p style={{ marginTop: '25px' }}>Giảm {sell}% so với giá bìa</p>
                         <p
                             style={{
                                 fontSize: '16px',

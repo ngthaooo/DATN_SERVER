@@ -266,7 +266,6 @@ const ListOrderUser = () => {
           <Option key={option.value} value={option.value}>{option.label}</Option>
         ))}
       </Select>
-      {/* Reset Button */}
       <Button type="default" onClick={handleReset} style={{ marginLeft: 8 }}>
       mặc định
       </Button>
@@ -282,7 +281,6 @@ const ListOrderUser = () => {
         onCancel={handleModalClose}
         footer={null}
       >
-        {/* Render details of selected order here */}
         <pre>{JSON.stringify(selectedOrder, null, 2)}</pre>
       </Modal>
     </div>

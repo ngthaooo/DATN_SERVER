@@ -26,14 +26,16 @@ import ListAuthorBookButton from './ListAuthorBookSelect';
 import ListBookLate from './ListBookLate';
 import ListBookByPublicsher from './ListBookByPublicsher';
 import ListDetailBookWhenBuy from './ListDetailBookWhenBuy';
+import ChiTiettacGiaVaTheoSach from './ChiTiettacGiaVaTheoSach';
 import ManSubmirMuaHangTuGioHang from './ManSubmirMuaHangTuGioHang';
 import ListBlogCustomer from './ListBlogCustomer';
 import ChatBots from '../Utils/ChatBots/ChatBot';
-import ListBookByAuthorName from './ListBookByAuthorName';
+import './GioiThieu.css';
+import NhaNamProfile from './BasicGioiThieu';
+
 const { Title } = Typography;
 
-
-function ChiTiettacGiaVaTheoSach() {
+function GioiThieu() {
     const [username, setUsername] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isNextBuy, setIsNextBuy] = useState(false);
@@ -320,19 +322,22 @@ function ChiTiettacGiaVaTheoSach() {
             </div>
 
 
+            <div className={styles.layoutContentImage}>
+                <Image
+                    width="30%"
+                    src="https://bizweb.dktcdn.net/100/363/455/files/untitled-design-1.png?v=1695720988683"
+                    alt="Decorative"
+                />
+            </div>
+
+
             <span>
                 <ChatBots />
             </span>
-            <div>
-                <DetailAuthorBook authorBooName={localStorage.getItem('author')} />
-            </div>
-            <div style={{ marginTop: '50px' }}>
-                <h1 style={{ color: 'green',marginLeft:'260px' }}>Sách cùng loại</h1>
-               <div style={{marginLeft:'200px'}}>
-               <ListBookByAuthorName />
-               </div>
-            </div>
-            <div className="layout-footer">
+            <NhaNamProfile/>
+
+
+            <div className="layout-footer--gioi-thieu">
                 <FooterHeader />
             </div>
 
@@ -340,4 +345,4 @@ function ChiTiettacGiaVaTheoSach() {
     );
 }
 
-export default ChiTiettacGiaVaTheoSach;
+export default GioiThieu;
