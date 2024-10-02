@@ -49,7 +49,7 @@ func (u *CartUseCase) ListCartByUser(ctx context.Context, username string) (*ent
 		return nil, errors.ErrSystem
 	}
 	for _, v := range carts {
-		book, _ := u.book.GetBookById(ctx, v.BookID)
+		book, _ := u.book.GetBookByIdUseCart(ctx, v.BookID)
 		if book != nil {
 			files, _ := u.file.GetFileByObjectId(ctx, book.ID)
 			fileUrl := "" // Mặc định là chuỗi rỗng

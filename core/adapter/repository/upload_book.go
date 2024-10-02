@@ -267,3 +267,12 @@ func (u *CollectionBook) GetListBookByTypeBookBotUseBot(ctx context.Context, nam
 
 	return books, result.Error
 }
+
+func (c *CollectionBook) GetBookByIdUseCart(ctx context.Context, id int64) (*domain.Book, error) {
+	var book *domain.Book
+	result := c.book.Where("id = ? and is_active = true AND quantity > 0", id).First(&book)
+	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		return nil, nil
+	}
+	return book, result.Error
+}
