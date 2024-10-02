@@ -120,7 +120,7 @@ func (u *CollectionOrder) UpdateStatusOrderSucsess(ctx context.Context, id int64
 	result := u.db.Model(&domain.Order{}).
 		Where("id = ?", id).
 		Updates(map[string]interface{}{
-			"status":       enums.AWAITING_CONFIRMATION,
+			"status":       enums.ONLINE_PAYMENT_RECEIVED,
 			"type_payment": paymentType,
 		})
 

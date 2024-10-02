@@ -113,6 +113,7 @@ func NewApiRouter(
 		orderGroup.GET("/api/getlist/user", order.GetListOrderForuser)
 		orderGroup.PATCH("/api/update/calcel", order.UpdateOrderWhenCanCel)
 		orderGroup.GET("/api/listorder/admin", order.GetListOrderForAdmin)
+		orderGroup.POST("/api/create/order/use/bot", order.CreateBuyToBot)
 	}
 	deliveryAddressGroup := r.Group("/delivery_address")
 	{

@@ -140,3 +140,18 @@ func (u *ControllerOrder) GetListOrderForAdmin(ctx *gin.Context) {
 	}
 	u.baseController.Success(ctx, listOrder)
 }
+
+func (u *ControllerOrder) CreateBuyToBot(ctx *gin.Context) {
+	var req entities.OrderDetailsUseBot
+
+	if err := ctx.ShouldBind(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, err)
+		return
+	}
+	_, _, err := u.order.CreateOrderOffLineUseBot(ctx, &req)
+	if err != nil {
+		u.baseController.ErrorData(ctx, errors.ErrConflict)
+		return
+	}
+	u.baseController.Success(ctx, nil)
+}
