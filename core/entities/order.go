@@ -79,3 +79,13 @@ type Bill struct {
 	Address    *domain.DeliveryAddress `json:"address"`
 	CreateTime time.Time               `json:"create_time"`
 }
+
+type OrderDetailsUseBot struct {
+	UserName    string `json:"user_name"`
+	NameBook    string `json:"name_book"`
+	Quantity    int    `json:"quantity"`
+	Address     string `json:"address"`
+	Email       string `json:"email"`
+	PhoneNumber string `json:"phone_number"`
+	AddresId    int64  `json:"addres_id"`
+}

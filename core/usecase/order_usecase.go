@@ -472,3 +472,49 @@ func (u *UseCaseOrder) ExportBill(ctx context.Context, id string) (*entities.Bil
 		CreateTime: estimatedDate,
 	}, nil
 }
+
+func (u *UseCaseOrder) CreateOrderUseBot(ctx context.Context, req *entities.OrderDetailsUseBot) (int64, float64, error) {
+	orderId := utils.GenerateUniqueKey()
+	var amount float64
+	book, err := u.book.GetBookByUserNameBook(ctx, req.NameBook)
+	if err != nil {
+		log.Error(err, "error")
+		return 0, 0, errors.NewSystemError("error system")
+	}
+	if book == nil {
+		log.Error(err, "error")
+		return 0, 0, errors.NewSystemError("error system")
+	}
+	orderDate := time.Now()
+	orderDateString := orderDate.Format("2006-01-02 15:04:05")
+
+	amount = book.Price * float64(req.Quantity)
+	err = u.order.CreateOrder(ctx, &domain.Order{
+		ID:           orderId,
+		CustomerName: req.UserName,
+		OrderDate:    orderDateString,
+		Quantity:     req.Quantity,
+		TotalAmount:  amount,
+		Status:       enums.AWAITING_CONFIRMATION,
+		TypePayment:  enums.TYPE_PAYMENT_ONLINE,
+		CreateTime:   time.Now(),
+		CreateOrder:  utils.GenerateTimestamp(),
+		AddressId:    req.AddresId,
+	})
+	if err != nil {
+		log.Error(err, "error")
+		return 0, 0, errors.NewSystemError("error system")
+	}
+	err = u.orderItem.CreateOrderItem(ctx, &domain.OrderItem{
+		ID:       orderId,
+		OrderID:  utils.GenerateUniqueKey(),
+		BookID:   book.ID,
+		Quantity: req.Quantity,
+		Price:    amount,
+	})
+	if err != nil {
+		log.Error(err, "error")
+		return 0, 0, errors.NewSystemError("error system")
+	}
+	return orderId, amount, nil
+}

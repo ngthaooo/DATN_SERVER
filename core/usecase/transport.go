@@ -32,7 +32,6 @@ func (u *TransPortUserCase) GetInforMationForChatBot(ctx context.Context, text *
 	nameBook, index := u.extractDetails(text.Content)
 	if index > 0 {
 		if index == 1 {
-			log.Info("1")
 			book, err := u.book.GetBookByUserNameBook(ctx, nameBook.(string))
 			if err != nil {
 				log.Error(err, "error")
@@ -46,19 +45,32 @@ func (u *TransPortUserCase) GetInforMationForChatBot(ctx context.Context, text *
 				})
 			} else {
 				orderInfor, _ := parseOrderDetails(text.Content)
-				respWhenSearhEng = append(respWhenSearhEng, entities.OrderDetails{
-					Index:       4,
-					NameBook:    orderInfor.NameBook,
-					Quantity:    orderInfor.Quantity,
-					Address:     orderInfor.Address,
-					Email:       orderInfor.Email,
-					PhoneNumber: orderInfor.PhoneNumber,
-				})
-			}
+				book, err := u.book.GetBookByUserNameBook(ctx, orderInfor.NameBook)
+				if err != nil {
+					log.Error(err, "error")
+					return nil, errors.ErrSystem
+				}
+				if book == nil {
+					respWhenSearhEng = append(respWhenSearhEng, entities.OrderDetails{
+						Index: 41,
+					})
+				} else {
+					respWhenSearhEng = append(respWhenSearhEng, entities.OrderDetails{
+						Index:       4,
+						NameBook:    orderInfor.NameBook,
+						Quantity:    orderInfor.Quantity,
+						Address:     orderInfor.Address,
+						Email:       orderInfor.Email,
+						PhoneNumber: orderInfor.PhoneNumber,
+					})
+					log.Infof("data ", respWhenSearhEng...)
 
+				}
+
+			}
 		}
+
 		if index == 2 {
-			log.Info("2")
 			book, err := u.book.GetCountBookByUserNameBook(ctx, nameBook.(string))
 			if err != nil {
 				log.Error(err, "error")
@@ -72,7 +84,6 @@ func (u *TransPortUserCase) GetInforMationForChatBot(ctx context.Context, text *
 			})
 		}
 		if index == 3 {
-			log.Info("3")
 			book, err := u.book.GetAuthorBookByBook(ctx, nameBook.(string))
 			if err != nil {
 				log.Error(err, "error")
@@ -161,9 +172,9 @@ func parseOrderDetails(data string) (entities.OrderDetails, error) {
 
 	// Cải thiện regex patterns
 	patterns := map[string]*regexp.Regexp{
-		"bookName":    regexp.MustCompile(`(?:mua|đặt)(?:\s+cuốn)?(?:\s+sách)?\s+(.+?)(?:\s+(?:số lượng|với số lượng|gửi về|giao hàng))`),
+		"bookName":    regexp.MustCompile(`(?:mua|đặt)(?:\s+cuốn)?(?:\s+sách)?\s+(.+?)(?:\s+(?:số lượng|với số lượng|gửi về|giao hàng|tới địa chỉ))`),
 		"quantity":    regexp.MustCompile(`(?:số lượng|với số lượng)\s+(\d+)`),
-		"address":     regexp.MustCompile(`(?:gửi về|giao hàng tới|địa chỉ)\s+(.+?)(?:,\s*(?:mail|email|số điện thoại|sđt|$))`),
+		"address":     regexp.MustCompile(`(?:gửi về|giao hàng tới|tới địa chỉ)\s+(.+?)(?:\s*(?:email|mail|số điện thoại|sđt|$))`),
 		"email":       regexp.MustCompile(`(?:mail|email)\s+(\S+@\S+\.\S+)`),
 		"phoneNumber": regexp.MustCompile(`(?:số điện thoại|sđt)\s+(\d{8,12})`),
 	}
