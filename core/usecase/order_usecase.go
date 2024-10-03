@@ -79,6 +79,7 @@ func (u *UseCaseOrder) UpdateOrderForSend(ctx context.Context, id string, status
 	statusNumber, _ := strconv.ParseInt(status, 10, 64)
 	err := u.order.UpdateOrderForSend(ctx, idNumber, int(statusNumber))
 	if err != nil {
+		log.Error(err, "error")
 		return errors.NewSystemError(fmt.Sprintf("error system . %v", err))
 	}
 	return nil

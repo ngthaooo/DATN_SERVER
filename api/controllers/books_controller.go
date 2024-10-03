@@ -185,3 +185,12 @@ func (u *ControllersUploadBooks) GetListBookUseBot(ctx *gin.Context) {
 	}
 	u.baseController.Success(ctx, books)
 }
+
+func (u *ControllersUploadBooks) LaySachBanChayChoBot(ctx *gin.Context) {
+	resp, err := u.books.SachBanChayChoBot(ctx)
+	if err != nil {
+		u.baseController.ErrorData(ctx, err)
+		return
+	}
+	u.baseController.Success(ctx, resp)
+}

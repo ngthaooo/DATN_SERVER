@@ -490,3 +490,28 @@ func (u *UploadBookUseCase) GetListBookUseBot(ctx context.Context, name string) 
 	}
 	return resp, nil
 }
+
+func (u *UploadBookUseCase) SachBanChayChoBot(ctx context.Context) ([]*entities.BookBanChay, errors.Error) {
+	var resp []*entities.BookBanChay
+
+	listBook, err := u.books.GetListBookSellWell(ctx)
+	if err != nil {
+		log.Error(err, "error fetching best-selling books")
+		return nil, errors.NewSystemError(fmt.Sprintln(err))
+	}
+
+	limit := 2
+	if len(listBook) < limit {
+		limit = len(listBook)
+	}
+	for i := 0; i < limit; i++ {
+		v := listBook[i]
+		resp = append(resp, &entities.BookBanChay{
+			NameBook:    v.Title,
+			Price:       v.Price,
+			AuthortBook: v.AuthorName,
+		})
+	}
+
+	return resp, nil
+}

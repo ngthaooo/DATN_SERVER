@@ -130,3 +130,9 @@ type BookRespDetailList struct {
 	BookDetailList []*BookDetailList `json:"book_detail_list"`
 	Count          int               `json:"count"`
 }
+
+type BookBanChay struct {
+	NameBook    string  `json:"name_book"`
+	Price       float64 `json:"price"`
+	AuthortBook string  `json:"authort_book"`
+}
