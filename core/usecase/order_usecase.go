@@ -304,138 +304,30 @@ func (u *UseCaseOrder) GetListOrderByUserProFile(ctx context.Context, name strin
 }
 
 func (u *UseCaseOrder) GetListOrderAdmin(ctx context.Context) ([]*entities.OrderDetailsAdmin, error) {
-
-	now := time.Now()
-	estimatedDate := now.Add(3 * 24 * time.Hour)
-	var listItemOrder = make([]entities.Item, 0)
-	var detailListorder = make([]*entities.OrderDetailsAdmin, 0)
-	listOrder, err := u.order.ListOrders(ctx, &domain.OrderForm{})
+	var dataResp = make([]*entities.OrderDetailsAdmin, 0)
+	orders, err := u.order.ListOrdersUseAdmin(ctx)
 	if err != nil {
-		log.Error(err, "Error unmarshalling JSON: %v")
+		log.Error(err, "error system: %v")
 		return nil, errors.ErrSystem
 	}
-	for _, v := range listOrder {
 
-		orderItem, err := u.orderItem.GetOrderByOrderId(ctx, v.ID)
-		if err != nil {
-			log.Error(err, "Error system: %v")
-			return nil, errors.ErrSystem
+	for _, order := range orders {
+		if order.Status != enums.CANCELLED {
+			dataResp = append(dataResp, &entities.OrderDetailsAdmin{
+				OrderId:     order.ID,
+				TimeUserBuy: order.CreateTime.Format("02/01/2006"), // Format: DD/MM/YYYY
+				Amount:      order.TotalAmount,
+				Status:      order.Status,
+				Quantity:    order.Quantity,
+			})
 		}
-		getaddress, err := u.address.GetAddressByUserName(ctx, v.CustomerName)
-		if err != nil {
-			log.Error(err, "Error system: %v")
-			return nil, errors.ErrSystem
-		}
-		for _, v := range orderItem {
-			book, _ := u.book.GetBookByIdUseOrderTk(ctx, v.BookID)
-			if book != nil {
-				listItemOrder = append(listItemOrder, entities.Item{
-					Name:     book.Title,
-					Quantity: v.Quantity,
-					Price:    v.Price,
-				})
-			}
-
-		}
-		if orderItem != nil {
-			if getaddress != nil {
-				detailListorder = append(detailListorder, &entities.OrderDetailsAdmin{
-					OrderID:    v.ID,
-					CreateTime: v.CreateTime,
-
-					Address: &domain.DeliveryAddress{
-						ID:          getaddress.ID,
-						OrderID:     getaddress.OrderID,
-						Email:       getaddress.Email,
-						UserName:    v.CustomerName,
-						PhoneNumber: getaddress.PhoneNumber,
-						Province:    getaddress.PhoneNumber,
-						District:    getaddress.District,
-						Commune:     getaddress.Commune,
-						Detailed:    getaddress.Detailed,
-						NickName:    getaddress.NickName,
-					},
-					Amount:        v.TotalAmount,
-					EstimatedDate: estimatedDate,
-					Items:         listItemOrder,
-					Status:        v.Status,
-					PaymentType:   v.TypePayment,
-					UserName:      v.CustomerName,
-				})
-			}
-
-		}
-
 	}
 
-	return detailListorder, nil
+	return dataResp, nil
 }
 
 func (u *UseCaseOrder) GetListOrderByThongkeHeader(ctx context.Context) (*entities.ListOrderDetailsAdminForHeader, error) {
-	users, err := u.user.GetNewUsersInMonth()
-	if err != nil {
-		return nil, errors.NewSystemError(fmt.Sprintf("error system . %v", err))
-	}
-	now := time.Now()
-	estimatedDate := now.Add(3 * 24 * time.Hour)
-	var listItemOrder = make([]entities.Item, 0)
-	var detailListorder = make([]*entities.OrderDetailsAdmin, 0)
-	listOrder, err := u.order.ListOrders(ctx, &domain.OrderForm{})
-	if err != nil {
-		log.Error(err, "Error unmarshalling JSON: %v")
-		return nil, errors.ErrSystem
-	}
-	for _, v := range listOrder {
-
-		orderItem, err := u.orderItem.GetOrderByOrderId(ctx, v.ID)
-		if err != nil {
-			log.Error(err, "Error system: %v")
-			return nil, errors.ErrSystem
-		}
-		getaddress, err := u.address.GetAddressByUserName(ctx, v.CustomerName)
-		if err != nil {
-			log.Error(err, "Error system: %v")
-			return nil, errors.ErrSystem
-		}
-		for _, v := range orderItem {
-			book, _ := u.book.GetBookById(ctx, v.BookID)
-			listItemOrder = append(listItemOrder, entities.Item{
-				Name:     book.Title,
-				Quantity: v.Quantity,
-				Price:    v.Price,
-			})
-		}
-
-		if orderItem != nil {
-			detailListorder = append(detailListorder, &entities.OrderDetailsAdmin{
-				OrderID:    v.ID,
-				CreateTime: v.CreateTime,
-				Address: &domain.DeliveryAddress{
-					ID:          getaddress.ID,
-					OrderID:     getaddress.OrderID,
-					Email:       getaddress.Email,
-					UserName:    v.CustomerName,
-					PhoneNumber: getaddress.PhoneNumber,
-					Province:    getaddress.PhoneNumber,
-					District:    getaddress.District,
-					Commune:     getaddress.Commune,
-					Detailed:    getaddress.Detailed,
-					NickName:    getaddress.NickName,
-				},
-				Amount:        v.TotalAmount,
-				EstimatedDate: estimatedDate,
-				Items:         listItemOrder,
-				Status:        v.Status,
-				PaymentType:   v.TypePayment,
-				UserName:      v.CustomerName,
-			})
-		}
-
-	}
-	return &entities.ListOrderDetailsAdminForHeader{
-		OrderDetailsAdmin:          detailListorder,
-		CountNewAccountUserInMonth: len(users),
-	}, nil
+	return nil, nil
 }
 
 func (u *UseCaseOrder) ExportBill(ctx context.Context, id string) (*entities.Bill, errors.Error) {
@@ -571,3 +463,37 @@ func (u *UseCaseOrder) CreateOrderOffLineUseBot(ctx context.Context, req *entiti
 	}
 	return orderId, amount, nil
 }
+
+// {
+//     "code": 0,
+//     "message": "success",
+//     "body": [
+//         {
+//             "user_name": "thangth7",
+//             "order_id": 4784721,
+//             "create_time": "2024-09-29T03:12:07.904443+07:00",
+//             "address": {
+//                 "id": 1515377,
+//                 "email": "tranhuythang9995@gmail.com",
+//                 "user_name": "thangth7",
+//                 "phone_number": "0981436091",
+//                 "province": "0981436091",
+//                 "district": "Huyện Kiên Hải",
+//                 "commune": "Xã Hòn Tre",
+//                 "detailed": "Xã Hòn Tre",
+//                 "nick_name": "thang dz 3"
+//             },
+//             "amount": 70000,
+//             "estimated_date": "2024-10-06T22:06:33.429019136+07:00",
+//             "items": [
+//                 {
+//                     "name": "cry in trees",
+//                     "quantity": 4,
+//                     "price": 10000
+//                 }
+//             ],
+//             "status": 21,
+//             "payment_type": 25
+//         }
+//     ]
+// }

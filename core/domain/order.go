@@ -95,4 +95,6 @@ type RepositoryOrder interface {
 	GetListOrderByTimeOneDay(ctx context.Context, day int64) ([]*Order, error)
 
 	GetListorderByUser(ctx context.Context, username string) ([]*Order, error)
+
+	ListOrdersUseAdmin(ctx context.Context) ([]*Order, error)
 }

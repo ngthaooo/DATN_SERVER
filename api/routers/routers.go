@@ -64,7 +64,7 @@ func NewApiRouter(
 		bookGroup.PUT("/update", book.UpdateBookById)
 		bookGroup.GET("/sell/well", book.GetListBookSellWell) //
 		bookGroup.GET("/detail/page", book.GetdetailBookByid)
-		bookGroup.GET("/list/type_book", book.GetListBookByTypeBook) // can su ly
+		bookGroup.GET("/list/type_book", book.GetListBookByTypeBook)
 		bookGroup.PATCH("/update/order/cancel", book.UpdateQuantityBookByOrderId)
 		bookGroup.GET("/list/filter", book.GetBooksByName)
 		bookGroup.GET("/sell/late", book.GetListFiveLatestBooks) //
@@ -109,7 +109,7 @@ func NewApiRouter(
 		orderGroup.GET("/list/admin", order.GetListOrder)
 		orderGroup.PATCH("/update/admin/submit", order.UpdateOrderForSend)
 		orderGroup.PATCH("/api/order/offiline", order.UpdateOrderOffline)
-		orderGroup.GET("/api/admin/day", order.GetOrderBuyOneDay)
+		orderGroup.GET("/api/admin/day", order.GetOrderBuyOneDay)             //ko dung
 		orderGroup.POST("/api/pend/offline", order.CreateOrderWhenBuyOffLine) // payment order offline
 		orderGroup.GET("/api/getlist/user", order.GetListOrderForuser)
 		orderGroup.PATCH("/api/update/calcel", order.UpdateOrderWhenCanCel)

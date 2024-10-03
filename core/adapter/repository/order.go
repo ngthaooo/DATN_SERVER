@@ -186,3 +186,10 @@ func (u *CollectionOrder) GetListorderByUser(ctx context.Context, username strin
 	result := u.db.Where("customer_name = ?", username).Find(&orders)
 	return orders, result.Error
 }
+
+func (c *CollectionOrder) ListOrdersUseAdmin(ctx context.Context) ([]*domain.Order, error) {
+	var orders []*domain.Order
+	result := c.db.Order("create_order asc").Find(&orders)
+
+	return orders, result.Error
+}
