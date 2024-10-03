@@ -155,3 +155,12 @@ func (u *ControllerOrder) CreateBuyToBot(ctx *gin.Context) {
 	}
 	u.baseController.Success(ctx, nil)
 }
+
+func (u *ControllerOrder) LayThongTinThongKeCho(ctx *gin.Context) {
+	listOrder, err := u.order.TongTinChoThongKePhanHeader(ctx)
+	if err != nil {
+		u.baseController.ErrorData(ctx, errors.ErrConflict)
+		return
+	}
+	u.baseController.Success(ctx, listOrder)
+}

@@ -81,7 +81,7 @@ func ConvertTimestampToDateTime(timestamp int64) string {
 	t := time.Unix(timestamp, 0)
 
 	// Định dạng lại ngày tháng theo ý muốn
-	formattedDateTime := t.Format("2006-01-02 15:04:05")
+	formattedDateTime := t.Format("2006-01-02")
 
 	return formattedDateTime
 }

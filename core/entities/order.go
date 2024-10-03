@@ -85,3 +85,8 @@ type OrderDetailsUseBot struct {
 	PhoneNumber string `json:"phone_number"`
 	AddresId    int64  `json:"addres_id"`
 }
+
+type ThongKePhanHeeader struct {
+	User              []*UserRespGetList   `json:"user"`
+	OrderDetailsAdmin []*OrderDetailsAdmin `json:"order_details_admin"`
+}

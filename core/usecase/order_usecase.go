@@ -315,7 +315,7 @@ func (u *UseCaseOrder) GetListOrderAdmin(ctx context.Context) ([]*entities.Order
 		if order.Status != enums.CANCELLED {
 			dataResp = append(dataResp, &entities.OrderDetailsAdmin{
 				OrderId:     order.ID,
-				TimeUserBuy: order.CreateTime.Format("02/01/2006"), // Format: DD/MM/YYYY
+				TimeUserBuy: order.CreateTime.Format("02/01/2006"),
 				Amount:      order.TotalAmount,
 				Status:      order.Status,
 				Quantity:    order.Quantity,
@@ -464,36 +464,42 @@ func (u *UseCaseOrder) CreateOrderOffLineUseBot(ctx context.Context, req *entiti
 	return orderId, amount, nil
 }
 
-// {
-//     "code": 0,
-//     "message": "success",
-//     "body": [
-//         {
-//             "user_name": "thangth7",
-//             "order_id": 4784721,
-//             "create_time": "2024-09-29T03:12:07.904443+07:00",
-//             "address": {
-//                 "id": 1515377,
-//                 "email": "tranhuythang9995@gmail.com",
-//                 "user_name": "thangth7",
-//                 "phone_number": "0981436091",
-//                 "province": "0981436091",
-//                 "district": "Huyện Kiên Hải",
-//                 "commune": "Xã Hòn Tre",
-//                 "detailed": "Xã Hòn Tre",
-//                 "nick_name": "thang dz 3"
-//             },
-//             "amount": 70000,
-//             "estimated_date": "2024-10-06T22:06:33.429019136+07:00",
-//             "items": [
-//                 {
-//                     "name": "cry in trees",
-//                     "quantity": 4,
-//                     "price": 10000
-//                 }
-//             ],
-//             "status": 21,
-//             "payment_type": 25
-//         }
-//     ]
-// }
+func (u *UseCaseOrder) TongTinChoThongKePhanHeader(ctx context.Context) (*entities.ThongKePhanHeeader, error) {
+	var dataResp = make([]*entities.OrderDetailsAdmin, 0)
+	var userResp = make([]*entities.UserRespGetList, 0)
+	orders, err := u.order.ListOrdersUseAdmin(ctx)
+	if err != nil {
+		log.Error(err, "error system: %v")
+		return nil, errors.ErrSystem
+	}
+
+	for _, order := range orders {
+		if order.Status != enums.CANCELLED {
+			dataResp = append(dataResp, &entities.OrderDetailsAdmin{
+				OrderId:     order.ID,
+				TimeUserBuy: order.CreateTime.Format("02/01/2006"),
+				Amount:      order.TotalAmount,
+				Status:      order.Status,
+				Quantity:    order.Quantity,
+			})
+		}
+	}
+	users, err := u.user.FindAccount(ctx, &domain.UserReqByForm{})
+	if err != nil {
+		log.Error(err, "error system: %v")
+		return nil, errors.ErrSystem
+	}
+	for _, v := range users {
+		timeString := utils.ConvertTimestampToDateTime(int64(v.CreateTime))
+		userResp = append(userResp, &entities.UserRespGetList{
+			ID: v.ID,
+
+			CreateTime: timeString,
+		})
+	}
+
+	return &entities.ThongKePhanHeeader{
+		User:              userResp,
+		OrderDetailsAdmin: dataResp,
+	}, nil
+}

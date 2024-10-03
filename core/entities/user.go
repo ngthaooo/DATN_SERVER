@@ -23,14 +23,15 @@ type LoginResp struct {
 	AddressId int64  `json:"address_id"`
 }
 type UserRespGetList struct {
-	ID          int64  `json:"id"`
-	Username    string `json:"username"`
-	Email       string `json:"email"`
-	FullName    string `json:"full_name"`
-	Address     string `json:"address"`
-	PhoneNumber string `json:"phone_number"`
-	Avatar      string `json:"avatar"`
-	Role        int    `json:"role"`
+	ID          int64  `json:"id,omitempty"`
+	Username    string `json:"username,omitempty"`
+	Email       string `json:"email,omitempty"`
+	FullName    string `json:"full_name,omitempty"`
+	Address     string `json:"address,omitempty"`
+	PhoneNumber string `json:"phone_number,omitempty"`
+	Avatar      string `json:"avatar,omitempty"`
+	Role        int    `json:"role,omitempty"`
+	CreateTime  string `json:"create_time,omitempty"`
 }
 
 type UserProFile struct {
