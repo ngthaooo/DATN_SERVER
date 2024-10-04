@@ -82,7 +82,7 @@ const (
 	AWAITING_ONLINE_PAYMENT = 13 // Đang chờ thanh toán online
 	ONLINE_PAYMENT_RECEIVED = 15 // Đã nhận thanh toán online
 	PREPARING_ORDER         = 17 // Đang chuẩn bị đơn hàng
-	IN_TRANSIT              = 19 // Đang vận chuyển
+	IN_TRANSIT              = 19 // Đang chờ vận chuyển
 	OUT_FOR_DELIVERY        = 21 // Đang giao hàng
 	DELIVERED               = 23 //  Đơn hàng đã giao và hoàn tất
 	CANCELLED               = 25 // Đơn hàng đã hủy

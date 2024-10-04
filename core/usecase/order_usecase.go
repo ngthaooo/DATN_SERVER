@@ -503,3 +503,71 @@ func (u *UseCaseOrder) TongTinChoThongKePhanHeader(ctx context.Context) (*entiti
 		OrderDetailsAdmin: dataResp,
 	}, nil
 }
+
+func (u *UseCaseOrder) GetListOrderUseSubmitProcerss(ctx context.Context) ([]*entities.ListOrdersUseAdminProcess, error) {
+
+	now := time.Now()
+	estimatedDate := now.Add(3 * 24 * time.Hour)
+	var listItemOrder = make([]entities.Item, 0)
+	var detailListorder = make([]*entities.ListOrdersUseAdminProcess, 0)
+	listOrder, err := u.order.ListOrders(ctx, &domain.OrderForm{})
+	if err != nil {
+		log.Error(err, "Error unmarshalling JSON: %v")
+		return nil, errors.ErrSystem
+	}
+	for _, v := range listOrder {
+
+		orderItem, err := u.orderItem.GetOrderByOrderId(ctx, v.ID)
+		if err != nil {
+			log.Error(err, "Error system: %v")
+			return nil, errors.ErrSystem
+		}
+		getaddress, err := u.address.GetAddressByUserName(ctx, v.CustomerName)
+		if err != nil {
+			log.Error(err, "Error system: %v")
+			return nil, errors.ErrSystem
+		}
+		for _, v := range orderItem {
+			book, _ := u.book.GetBookByIdUseOrderTk(ctx, v.BookID)
+			if book != nil {
+				listItemOrder = append(listItemOrder, entities.Item{
+					Name:     book.Title,
+					Quantity: v.Quantity,
+					Price:    v.Price,
+				})
+			}
+
+		}
+		if orderItem != nil {
+			if getaddress != nil {
+				detailListorder = append(detailListorder, &entities.ListOrdersUseAdminProcess{
+					OrderID:    v.ID,
+					CreateTime: v.CreateTime,
+
+					Address: &domain.DeliveryAddress{
+						ID:          getaddress.ID,
+						OrderID:     getaddress.OrderID,
+						Email:       getaddress.Email,
+						UserName:    v.CustomerName,
+						PhoneNumber: getaddress.PhoneNumber,
+						Province:    getaddress.PhoneNumber,
+						District:    getaddress.District,
+						Commune:     getaddress.Commune,
+						Detailed:    getaddress.Detailed,
+						NickName:    getaddress.NickName,
+					},
+					Amount:        v.TotalAmount,
+					EstimatedDate: estimatedDate,
+					Items:         listItemOrder,
+					Status:        v.Status,
+					PaymentType:   v.TypePayment,
+					UserName:      v.CustomerName,
+				})
+			}
+
+		}
+
+	}
+
+	return detailListorder, nil
+}

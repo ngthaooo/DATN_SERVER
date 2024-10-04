@@ -164,3 +164,12 @@ func (u *ControllerOrder) LayThongTinThongKeCho(ctx *gin.Context) {
 	}
 	u.baseController.Success(ctx, listOrder)
 }
+
+func (u *ControllerOrder) GetListOrderUseSubmitProcerss(ctx *gin.Context) {
+	listOrder, err := u.order.GetListOrderUseSubmitProcerss(ctx)
+	if err != nil {
+		u.baseController.ErrorData(ctx, errors.ErrConflict)
+		return
+	}
+	u.baseController.Success(ctx, listOrder)
+}

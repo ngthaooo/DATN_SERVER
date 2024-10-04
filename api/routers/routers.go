@@ -116,6 +116,7 @@ func NewApiRouter(
 		orderGroup.GET("/api/listorder/admin", order.GetListOrderForAdmin)
 		orderGroup.POST("/api/create/order/use/bot", order.CreateBuyToBot)
 		orderGroup.GET("/api/listorder/admin/header", order.LayThongTinThongKeCho)
+		orderGroup.GET("/api/list/process", order.GetListOrderUseSubmitProcerss)
 	}
 	deliveryAddressGroup := r.Group("/delivery_address")
 	{
