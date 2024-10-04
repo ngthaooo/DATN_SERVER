@@ -332,13 +332,55 @@ func (u *UploadBookUseCase) UpdateQuantityBookByOrderId(ctx context.Context, ord
 	return nil
 }
 
-func (u *UploadBookUseCase) GetBooksByName(ctx context.Context, nameBook string) ([]*domain.Book, errors.Error) {
+func (u *UploadBookUseCase) GetBooksByName(ctx context.Context, nameBook string) ([]*entities.BookRespSellWell, errors.Error) {
+	var booksResp = make([]*entities.BookRespSellWell, 0)
+
+	// Fetch books by name
 	books, err := u.books.GetBookByName(ctx, nameBook)
 	if err != nil {
-		log.Error(err, "error")
+		log.Error(err, "error fetching books by name")
 		return nil, errors.ErrSystem
 	}
-	return books, nil
+
+	for _, book := range books {
+		// Fetch list of files by book ID
+		listFile, err := u.fie_lc.GetListFileById(ctx, book.ID)
+		if err != nil {
+			log.Error(err, "error fetching file list")
+			return nil, errors.ErrSystem
+		}
+
+		// Check if file list is not empty
+		var fileDescFirst string
+		if len(listFile) > 0 {
+			fileDescFirst = listFile[0].URL
+		}
+
+		// Append book details to response
+		booksResp = append(booksResp, &entities.BookRespSellWell{
+			ID:            book.ID,
+			Title:         book.Title,
+			AuthorName:    book.AuthorName,
+			Publisher:     book.Publisher,
+			PublishedDate: book.PublishedDate,
+			ISBN:          book.ISBN,
+			Genre:         book.Genre,
+			Description:   book.Description,
+			Language:      book.Language,
+			PageCount:     book.PageCount,
+			Dimensions:    book.Dimensions,
+			Weight:        book.Weight,
+			Price:         book.Price,
+			DiscountPrice: book.DiscountPrice,
+			Quantity:      book.Quantity,
+			Notes:         book.Notes,
+			IsActive:      book.IsActive,
+			OpeningStatus: book.OpeningStatus,
+			FileDescFirst: fileDescFirst,
+		})
+	}
+
+	return booksResp, nil
 }
 
 func (u *UploadBookUseCase) GetListBookLasterNew(ctx context.Context) (*entities.BookSellWells, errors.Error) { //todo
@@ -353,10 +395,8 @@ func (u *UploadBookUseCase) GetListBookLasterNew(ctx context.Context) (*entities
 		listFile, _ := u.fie_lc.GetListFileById(ctx, v.ID)
 
 		if listFile != nil && len(listFile) > 0 {
-			// Nếu listFile có giá trị và không rỗng, gán URL của file đầu tiên
 			fileURL = listFile[0].URL
 		} else {
-			// Nếu listFile là nil hoặc rỗng, gán URL là chuỗi rỗng
 			fileURL = ""
 		}
 		if v.IsActive {
