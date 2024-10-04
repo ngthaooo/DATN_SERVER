@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"math"
+	"math/rand"
 	"shoe_shop_server/common/enums"
 	errors "shoe_shop_server/common/error"
 	"shoe_shop_server/common/log"
@@ -12,6 +13,7 @@ import (
 	"shoe_shop_server/core/domain"
 	"shoe_shop_server/core/entities"
 	"strconv"
+	"time"
 )
 
 type UploadBookUseCase struct {
@@ -540,7 +542,7 @@ func (u *UploadBookUseCase) SachBanChayChoBot(ctx context.Context) ([]*entities.
 		return nil, errors.NewSystemError(fmt.Sprintln(err))
 	}
 
-	limit := 2
+	limit := 1
 	if len(listBook) < limit {
 		limit = len(listBook)
 	}
@@ -554,4 +556,28 @@ func (u *UploadBookUseCase) SachBanChayChoBot(ctx context.Context) ([]*entities.
 	}
 
 	return resp, nil
+}
+
+func (u *UploadBookUseCase) SachGiamGiaChoBot(ctx context.Context) ([]*domain.Book, errors.Error) {
+	books, err := u.books.SachGiamGiaChoBot(ctx)
+	if err != nil {
+		log.Error(err, "error fetching discounted books")
+		return nil, errors.NewSystemError("error fetching discounted books")
+	}
+
+	if len(books) == 0 {
+		return []*domain.Book{}, nil
+	}
+
+	rand.Seed(time.Now().UnixNano())
+
+	limit := 1
+	var selectedBooks []*domain.Book
+
+	for i := 0; i < limit; i++ {
+		randomIndex := rand.Intn(len(books))
+		selectedBooks = append(selectedBooks, books[randomIndex])
+	}
+
+	return selectedBooks, nil
 }

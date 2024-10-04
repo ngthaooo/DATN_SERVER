@@ -84,4 +84,6 @@ type RepositoryBook interface {
 	GetListBookByTypeBookBotUseBot(ctx context.Context, nameBook string) ([]*Book, error)
 
 	GetBookByIdUseCart(ctx context.Context, id int64) (*Book, error)
+
+	SachGiamGiaChoBot(ctx context.Context) ([]*Book, error)
 }

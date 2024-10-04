@@ -72,6 +72,7 @@ func NewApiRouter(
 		bookGroup.GET("/list/by/publicsher", book.GetListBookByPublicSherName)
 		bookGroup.GET("/list/use/bot", book.GetListBookUseBot)
 		bookGroup.GET("/list/use/bot/banchay", book.LaySachBanChayChoBot)
+		bookGroup.GET("/list/giamgia", book.LaySachGiamGiaChoBot)
 	}
 	fileGroup := r.Group("/file")
 	{

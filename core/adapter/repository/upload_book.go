@@ -276,3 +276,12 @@ func (c *CollectionBook) GetBookByIdUseCart(ctx context.Context, id int64) (*dom
 	}
 	return book, result.Error
 }
+
+func (c *CollectionBook) SachGiamGiaChoBot(ctx context.Context) ([]*domain.Book, error) {
+	var books = make([]*domain.Book, 0)
+	result := c.book.Where("discount_price > 0 ").Find(&books)
+	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+		return nil, nil
+	}
+	return books, result.Error
+}

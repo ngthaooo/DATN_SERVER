@@ -194,3 +194,12 @@ func (u *ControllersUploadBooks) LaySachBanChayChoBot(ctx *gin.Context) {
 	}
 	u.baseController.Success(ctx, resp)
 }
+
+func (u *ControllersUploadBooks) LaySachGiamGiaChoBot(ctx *gin.Context) {
+	resp, err := u.books.SachGiamGiaChoBot(ctx)
+	if err != nil {
+		u.baseController.ErrorData(ctx, err)
+		return
+	}
+	u.baseController.Success(ctx, resp)
+}
